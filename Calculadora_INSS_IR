@@ -1,0 +1,72 @@
+from tkinter import *
+
+def calculo():
+    salario = float(entrada.get())
+
+
+    if salario < 1212:
+        print (f'O valor do seu INSS sobre seu salário é R$ {round(0.075*salario),2}.')
+        inss = round((0.075*salario),2)
+        salario_trib = salario - inss
+    elif 1212 < salario < 2427.79:
+        print (f'O valor do seu INSS sobre seu salário é R$ {round(0.075*(1212)+0.09*(salario-1212),2)}.')
+        inss = round(0.075*(1212)+0.09*(salario-1212),2)
+        salario_trib = salario - inss
+    elif 2427.80<salario<3641.69:
+        print (f'O valor do seu INSS sobre seu salário é R$ {round(0.075*(1212)+0.09*(2427.79-1212)+0.12*(salario-2427.79),2)}.')
+        inss = round(0.075*(1212)+0.09*(2427.79-1212)+0.12*(salario-2427.79),2)
+        salario_trib = salario - inss
+    elif 3641.70<salario<7088.50:
+        print (f'O valor do seu INSS sobre seu salário é R$ {round(0.075*(1212)+0.09*(2427.79-1212)+0.12*(3641.69-2427.79)+0.14*(salario-3641.7),2)}.')
+        inss = round(0.075*(1212)+0.09*(2427.79-1212)+0.12*(3641.69-2427.79)+0.14*(salario-3641.7),2)
+        salario_trib = salario - inss
+    elif salario > 7088.5:
+        print (f'O valor do seu INSS sobre seu salário é R$ {round(0.075*(1212)+0.09*(2427.79-1212)+0.12*(3641.69-2427.79)+0.14*(7088.5-3641.7),2)}.')
+        inss = round(0.075*(1212)+0.09*(2427.79-1212)+0.12*(3641.69-2427.79)+0.14*(7088.5-3641.7),2)
+        salario_trib = salario - inss
+
+
+    if salario_trib < 1903.98:
+        print('O imposto de renda sobre seu salário é R$ 0,00.')
+        imp = 0
+    elif 1903.99 < salario < 2826.65:
+        print(f'O imposto de renda sobre seu salário é R$ {round(0.075 * (salario_trib - 1903.99), 2)}.')
+        imp = round(0.075 * (salario_trib - 1903.99), 2)
+    elif 2826.66 < salario < 3751.05:
+        print(f'O imposto de renda sobre seu salário é R$ {round(0.075 * (2826.65 - 1903.99) + 0.15 * (salario_trib - 2826.66), 2)}.')
+        imp = round(0.075 * (2826.65 - 1903.99) + 0.15 * (salario_trib - 2826.66), 2)
+    elif 3751.06 < salario_trib < 4664.68:
+        print(f'O imposto de renda sobre seu salário é R$ {round(0.075 * (2826.65 - 1903.99) + 0.15 * (3751.05 - 2826.66) + 0.225 * (salario_trib - 3751.06),2)}.')
+        imp = round(0.075 * (2826.65 - 1903.99) + 0.15 * (3751.05 - 2826.66) + 0.225 * (salario_trib - 3751.06), 2)
+    elif salario_trib > 4664.68:
+        print(f'O imposto de renda sobre seu salário é R$ {round(0.075 * (2826.65 - 1903.99) + 0.15 * (3751.05 - 2826.66) + 0.225 * (4664.68 - 3751.06) + 0.275 * (salario_trib - 4664.68), 2)}.')
+        imp = round(0.075 * (2826.65 - 1903.99) + 0.15 * (3751.05 - 2826.66) + 0.225 * (4664.68 - 3751.06) + 0.275 * (salario_trib - 4664.68), 2)
+
+    lb["text"] = str(f'Portanto, as deduções totais do seu salário são R$ {imp} e R$ {inss}, totalizando R$ {imp + inss}.\n\n') + str(f'O salário líquido correspondente é de R$ {round(salario - inss- imp,2)}\n\n') + str(f'Você recebe, portanto, {round(100 * ((salario_trib - imp) / salario_trib), 2)}% do seu salário bruto.')
+
+    print(f'Portanto, as deduções totais do seu salário são R$ {imp} e R$ {inss}, totalizando R${imp + inss}.')
+    print(f'Seu salário líquido é: R$ {round(salario_trib - imp, 2)}.')
+    print(f'Você recebe, portanto, {round(100 * ((salario_trib - imp) / salario_trib), 2)}% do seu salário bruto.')
+
+
+janela = Tk()
+janela.title ("Imposto de Renda e INSS")
+janela.geometry("1000x300")
+janela.configure(background="#4682B4")
+
+texto_orientacao = Label(janela, text="Digite o seu salário bruto: R$",bg="#4682B4",  font = ('verdana',10,'bold'))
+texto_orientacao.place(relx =0.25,rely=0.20)
+
+entrada = Entry(janela, width=15,font = ('verdana',10,'bold'))
+entrada.place(relx =0.47,rely=0.20)
+
+
+botao = Button(janela,text='Calular o salário líquido',command = calculo, bg="#4682B4", fg="#fff", font = ('verdana',8,'bold'))
+botao.place(relx =0.40,rely=0.350)
+
+lb = Label(janela,text = "", bg="#4682B4", font = ('verdana',10,'bold'))
+lb.place(relx =0.15,rely=0.50)
+
+
+
+janela.mainloop()
